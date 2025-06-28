@@ -105,6 +105,18 @@ BEGIN
   END IF;
 END $$;
 
+-- Add url_token column to surveys for shareable links
+DO $$ 
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'surveys' AND column_name = 'url_token'
+  ) THEN
+    ALTER TABLE surveys ADD COLUMN url_token TEXT UNIQUE;
+    CREATE INDEX idx_surveys_url_token ON surveys(url_token);
+  END IF;
+END $$;
+
 -- Function to increment share count
 CREATE OR REPLACE FUNCTION increment_share_count(survey_id_param UUID)
 RETURNS VOID AS $$

@@ -76,11 +76,15 @@ EchoWave is positioned to become the leading anonymous feedback platform by comb
 - [x] **Export Features**: CSV, PDF, and JSON exports ✅
 - [x] **Date Range Filtering**: Custom date pickers for analytics ✅
 
-#### 3.2 AI-Powered Insights 🔄 **UPCOMING**
-- [ ] **OpenAI Integration**: GPT-4 for response analysis 🔄 **NEXT**
-- [ ] **Sentiment Analysis**: Positive/negative/neutral classification
-- [ ] **Theme Extraction**: Identify common topics and concerns
-- [ ] **Actionable Recommendations**: AI-generated improvement suggestions
+#### 3.2 AI-Powered Insights ✅ **COMPLETE**
+- [x] **OpenAI Integration**: GPT-4o-mini for response analysis ✅
+- [x] **Sentiment Analysis**: Positive/negative/neutral classification ✅
+- [x] **Theme Extraction**: Identify common topics and concerns ✅
+- [x] **Actionable Recommendations**: AI-generated improvement suggestions ✅
+- [x] **Privacy-Preserving Pipeline**: PII scrubbing, k-anonymity enforcement ✅
+- [x] **Smart Caching**: 6-hour cache with automatic expiry ✅
+- [x] **Representative Quotes**: Anonymous quotes grouped by theme ✅
+- [x] **Confidence Scoring**: AI confidence based on response quality ✅
 
 ### Phase 4: Growth & Monetization (Week 7-8) 🚧 **READY TO START**
 **Goal**: Implement viral mechanics and revenue streams
@@ -96,6 +100,92 @@ EchoWave is positioned to become the leading anonymous feedback platform by comb
 - [ ] **Stripe Integration**: Payment processing and subscription management
 - [ ] **Usage Limits**: Enforce tier restrictions
 - [ ] **Premium Features**: Advanced analytics, custom branding, team collaboration
+
+### Phase 5: AI Monetization & Cost Optimization 🆕 **PLANNED**
+**Goal**: Balance AI value demonstration with sustainable cost structure
+
+#### 5.1 Tiered AI Usage Model
+- [ ] **Free Tier AI Limits**:
+  - 2 AI insight generations per survey (lifetime)
+  - One survey can hold "active insight" at a time
+  - 24-hour cache refresh window
+  - Show cached insights even when credits exhausted
+- [ ] **Pro Tier AI Benefits** ($12/mo):
+  - 10 AI insight regenerations per month (pooled)
+  - Unlimited surveys with cached insights
+  - 2-hour cache refresh window
+  - Priority AI processing
+- [ ] **Enterprise Tier AI** ($99/mo):
+  - Unlimited AI insight regenerations
+  - Dedicated GPT-4 model access
+  - Custom AI prompt templates
+  - Optional on-premise fine-tuned models
+
+#### 5.2 Smart Caching & Cost Controls
+- [ ] **Intelligent Regeneration Rules**:
+  - Auto-regenerate only when survey gains ≥10 new responses
+  - Manual regeneration requires available credits
+  - Cost estimation before OpenAI calls
+  - Block expensive prompts for free users ($0.02+ estimated cost)
+- [ ] **Usage Tracking System**:
+  - `insight_usage` table for monthly credit tracking
+  - `remaining_credits()` function for real-time limits
+  - Server-side enforcement with 402 Payment Required
+  - Nightly cron job for credit resets
+
+#### 5.3 Cost Optimization Strategies
+- [ ] **Background Processing**:
+  - Edge Function queue for non-blocking AI generation
+  - WebSocket/polling for real-time updates
+  - 202 Accepted response with progress tracking
+- [ ] **Hybrid AI Approach**:
+  - Free sentiment analysis using HuggingFace embeddings
+  - Reserve GPT-4o-mini for theme extraction & recommendations
+  - 60-70% cost reduction while maintaining quality
+- [ ] **Prompt Deduplication**:
+  - Hash-based caching of identical response sets
+  - Reuse insights for similar survey patterns
+  - Reduce redundant OpenAI API calls
+
+#### 5.4 Monetization UX Strategy
+- [ ] **Value-First Onboarding**:
+  - "✨ Free preview courtesy of EchoWave" messaging
+  - Show full AI capabilities in first 2 uses
+  - Demonstrate ROI before paywall
+- [ ] **Gentle Upselling**:
+  - Neutral upgrade prompts when credits exhausted
+  - Always allow viewing cached insights
+  - No hard paywalls during development phase
+- [ ] **Usage Analytics**:
+  - Track AI generation costs vs user value
+  - Monitor conversion rates from free to paid
+  - A/B test credit limits and messaging
+
+#### 5.5 Monitoring & Alerts
+- [ ] **Cost Monitoring**:
+  - OpenAI usage API integration
+  - Daily spend alerts via Slack/email
+  - Grafana dashboard: generations vs credits burned
+  - Auto-circuit breaker at $X daily spend
+- [ ] **Performance Metrics**:
+  - AI insight generation success rates
+  - Average processing time per insight
+  - User satisfaction scores for AI recommendations
+  - Free-to-paid conversion tracking
+
+#### 5.6 Future AI Enhancements
+- [ ] **Advanced Analytics**:
+  - Trend comparison across insight generations
+  - Improvement tracking over time
+  - Benchmark comparisons with industry data
+- [ ] **Custom AI Models**:
+  - Industry-specific insight templates
+  - Fine-tuned models for enterprise clients
+  - Multi-language support for global surveys
+- [ ] **AI-Powered Features**:
+  - Automated survey question suggestions
+  - Response quality scoring
+  - Predictive analytics for response rates
 
 ---
 
@@ -133,12 +223,15 @@ EchoWave is positioned to become the leading anonymous feedback platform by comb
 - 1 active survey
 - 25 responses per survey
 - Basic charts and analytics
+- **2 AI insights per survey (lifetime)**
 - EchoWave branding
 - Community templates
 
 ### Pro Tier ($12/month)
 - Unlimited surveys
 - 500 responses per survey
+- **10 AI insight regenerations per month**
+- **2-hour insight cache refresh**
 - AI insights and sentiment analysis
 - Custom branding
 - CSV/PDF exports
@@ -147,6 +240,8 @@ EchoWave is positioned to become the leading anonymous feedback platform by comb
 
 ### Enterprise Tier ($99/month)
 - Unlimited responses
+- **Unlimited AI insight regenerations**
+- **Dedicated GPT-4 model access**
 - Team collaboration (5 users)
 - Advanced analytics
 - API access
@@ -163,11 +258,13 @@ EchoWave is positioned to become the leading anonymous feedback platform by comb
 - **Sign-up to First Survey**: Target 60% within 24 hours
 - **Survey Creation Completion**: Target 80% completion rate
 - **First Response**: Target 40% of surveys get ≥1 response within 48 hours
+- **AI Insight Generation**: Target 25% of eligible surveys generate insights
 
 ### Engagement Metrics
 - **Response Rate**: Target 30% average response rate per survey
 - **Creator Return Rate**: Target 40% return within 7 days to view results
 - **Session Duration**: Target 5+ minutes per session
+- **AI Insight Engagement**: Target 80% view rate for generated insights
 
 ### Growth Metrics
 - **Viral Coefficient (K-factor)**: Target 1.2 (each user brings 1.2 new users)
@@ -176,8 +273,10 @@ EchoWave is positioned to become the leading anonymous feedback platform by comb
 
 ### Revenue Metrics
 - **Free-to-Paid Conversion**: Target 5% within 30 days
+- **AI Feature Conversion**: Target 15% of AI users upgrade to Pro
 - **Monthly Recurring Revenue**: Target $10k by month 6
 - **Customer Lifetime Value**: Target 24 months average retention
+- **AI Cost Efficiency**: Target <30% of Pro revenue spent on OpenAI
 
 ---
 
@@ -195,7 +294,7 @@ EchoWave is positioned to become the leading anonymous feedback platform by comb
 - **Authentication**: Supabase Auth with social providers
 - **Storage**: Supabase Storage for file uploads
 - **Edge Functions**: Supabase Edge Functions for serverless logic
-- **AI**: OpenAI GPT-4 for insights generation
+- **AI**: OpenAI GPT-4o-mini for cost-effective insights generation
 
 ### Infrastructure
 - **Hosting**: Vercel for frontend, Supabase for backend
@@ -203,6 +302,7 @@ EchoWave is positioned to become the leading anonymous feedback platform by comb
 - **Monitoring**: Vercel Analytics + Supabase Metrics
 - **Payments**: Stripe for subscription management
 - **Email**: Resend for transactional emails
+- **AI Cost Monitoring**: OpenAI usage API + custom alerts
 
 ---
 
@@ -213,106 +313,49 @@ EchoWave is positioned to become the leading anonymous feedback platform by comb
 - **Encryption in Transit**: TLS 1.3 for all communications
 - **IP Anonymization**: Hash and salt IP addresses
 - **Response Anonymization**: Remove identifying metadata
+- **AI Privacy**: PII scrubbing before OpenAI processing
 
 ### Compliance
 - **GDPR Compliance**: Right to be forgotten, data portability
 - **CCPA Compliance**: California Consumer Privacy Act
 - **SOC 2 Type II**: Security and availability controls (Enterprise tier)
 - **Data Retention**: Configurable retention periods
+- **AI Data Handling**: No PII sent to third-party AI services
 
 ### Security Measures
 - **Rate Limiting**: Per-IP and per-user request limits
 - **Input Validation**: Comprehensive sanitization and validation
 - **CSRF Protection**: Cross-site request forgery prevention
 - **XSS Prevention**: Content Security Policy headers
+- **AI Cost Protection**: Request size limits and cost estimation
 
 ---
 
 ## 🎯 Immediate Next Steps (This Week)
 
-### Priority 1: Export Features ✅ **COMPLETE**
-1. **CSV Export**: Download survey responses as spreadsheet ✅
-2. **PDF Export**: Generate professional analytics reports ✅ 
-3. **JSON Export**: Raw data for developers/integrations ✅
-4. **Export Button UI**: Add download options to dashboard ✅
+### Priority 1: AI Insights Optimization ✅ **COMPLETE**
+1. **Core AI Pipeline**: OpenAI integration with privacy safeguards ✅
+2. **Smart Caching**: 6-hour cache with automatic expiry ✅
+3. **Dashboard Integration**: AI insights displayed prominently ✅
+4. **Cost Controls**: Usage tracking foundation ready for limits ✅
 
-### Priority 2: Data Filtering & Search ✅ **COMPLETE** 
-1. **Date Range Filtering**: Custom date pickers for analytics ✅
-2. **Dashboard Navigation**: View All button links to surveys page ✅
-3. **Database Integration**: Full Supabase integration for real data ✅
-4. **Real-time Updates**: Live survey counts and status updates ✅
+### Priority 2: AI Monetization Framework 🔄 **DEVELOPMENT PHASE**
+1. **Usage Tracking**: Implement `insight_usage` table and credit system
+2. **Tier Enforcement**: Add credit checks to insight generation API
+3. **UX Messaging**: Design gentle upselling for AI features
+4. **Cost Monitoring**: OpenAI usage tracking and alerts
 
-### Priority 3: Authentication & Backend ✅ **COMPLETE**
-1. **SSR Authentication**: Fixed client-server cookie synchronization ✅
-2. **API Security**: All endpoints properly authenticated ✅
-3. **Session Management**: Seamless login/logout flow ✅
-4. **Password Reset**: Complete email-based reset flow ✅
-
-### Priority 4: AI-Powered Insights 🚀 **IN PROGRESS**
-EchoWave's differentiator will be a privacy-preserving AI layer that converts anonymous text into actionable, non-identifying insights.
-
-#### 4.1 Privacy & Compliance ✅
-- k-Anonymity gate – insights route returns **403** until `response_count ≥ min_responses` (default 10).
-- PII scrub before LLM call (names, e-mails, phones, socials, locations → "<PII>").
-- Entity hashing so the same person cannot be deanonymised across answers.
-- No raw answers ever leave the DB or are returned to creators – only aggregated JSON.
-
-#### 4.2 Analytics Pipeline 🛠
-1. `POST /api/surveys/:id/insights/generate` → edge-function `generateInsights()`
-2. RLS + rate limit (1/min). Fetch answers, **Scrub → Aggregate → Cache**.
-3. Send redacted batch prompt to GPT-4o.
-4. Persist result in `survey_insights` (TTL 6 h) & stream progress to UI.
-5. `GET /api/surveys/:id/insights` returns cached JSON.
-
-```json
-{
-  "sentiment": {"positive":0.64,"neutral":0.28,"negative":0.08},
-  "themes": [
-    {"topic":"Team Communication","mentions":23,"score":0.82},
-    {"topic":"Work-Life Balance","mentions":17,"score":0.77}
-  ],
-  "ai_recommendations": [
-    "Introduce a weekly stand-up template to streamline updates.",
-    "Publish clear 'no-message' hours to reduce burnout."
-  ],
-  "top_quotes": [
-    {"theme":"Team Communication","quote":"\"Meetings feel scattered...\""}
-  ],
-  "trend_id":"e1c3..."  // used for redeploy comparisons
-}
-```
-
-#### 4.3 User Experience 🎨
-- **Executive Card** on dashboard with emoji sentiment bar & Top 3 themes.
-- **Drill-down Modal** – trend spark-lines, anonymised quotes, AI todo list.
-- **Improvement Profile** retained across "Re-deploy" cycles to track progress.
-- **Insight Streak** badge & weekly email "+12 new responses analysed – Communication ↑0.4" (borrowed from Duolingo's engagement loop).
-
-#### 4.4 Sprint Plan (1 week)
-Backend
-- [ ] `survey_insights` table + RLS
-- [ ] Edge function `generateInsights.ts`
-- [ ] CRON re-compute every 24 h
-
-API
-- [ ] Protected routes (generate / fetch) with Supabase JWT
-
-Frontend
-- [ ] "AI Insights" tab (skeleton loader → results)
-- [ ] Re-deploy flow w/ trend comparison
-
-Compliance
-- [ ] Add OpenAI processing clause to privacy policy
-
-Marketing
-- [ ] Landing-page GIF of real-time insights animation
-- [ ] Blog post: "Keeping anonymous feedback anonymous – how EchoWave's AI works."
-
-### Priority 5: Viral Growth Features
+### Priority 3: Viral Growth Features 🚀 **READY TO START**
 1. **QR Code Generation**: Easy mobile survey access
 2. **Social Sharing**: Pre-filled social media posts with engagement hooks
 3. **Referral System**: Reward users for bringing new creators
 4. **Public Gallery**: Showcase interesting anonymous surveys (opt-in)
+
+### Priority 4: Monetization Infrastructure 💰 **PLANNED**
+1. **Stripe Integration**: Payment processing and subscription management
+2. **Pricing Tiers**: Implement Free/Pro/Enterprise feature gates
+3. **Usage Limits**: Enforce response and survey limits by tier
+4. **Premium Features**: Advanced analytics, custom branding
 
 ---
 
@@ -326,6 +369,7 @@ create table profiles (
   full_name text,
   avatar_url text,
   subscription_tier text default 'free',
+  monthly_insight_credits integer default 2, -- AI credits
   created_at timestamp with time zone default now(),
   updated_at timestamp with time zone default now()
 );
@@ -343,6 +387,8 @@ create table surveys (
   is_active boolean default false,
   min_responses integer default 10,
   response_count integer default 0,
+  share_count integer default 0,
+  url_token text unique,
   created_at timestamp with time zone default now(),
   updated_at timestamp with time zone default now()
 );
@@ -353,7 +399,31 @@ create table responses (
   survey_id uuid references surveys(id) on delete cascade not null,
   answers jsonb not null,
   response_hash text, -- For anonymization
+  user_fingerprint text, -- For duplicate detection
+  ip_hash text, -- Privacy-preserving IP tracking
   submitted_at timestamp with time zone default now()
+);
+
+-- AI Insights table
+create table survey_insights (
+  id uuid default gen_random_uuid() primary key,
+  survey_id uuid references surveys(id) on delete cascade not null,
+  insights_data jsonb not null,
+  response_count integer not null,
+  generated_at timestamp with time zone default now(),
+  expires_at timestamp with time zone default (now() + interval '6 hours'),
+  trend_id text, -- For tracking improvement over time
+  unique(survey_id)
+);
+
+-- AI Usage tracking
+create table insight_usage (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references profiles(id) on delete cascade not null,
+  survey_id uuid references surveys(id) on delete cascade not null,
+  cost_estimate decimal(10,6), -- Estimated OpenAI cost
+  tokens_used integer, -- Actual tokens consumed
+  generated_at timestamp with time zone default now()
 );
 
 -- Templates table
@@ -377,21 +447,21 @@ create table templates (
 - **Target**: 100 beta users
 - **Focus**: Product-market fit validation
 - **Channels**: Personal network, Product Hunt preview
-- **Goal**: 50 surveys created, 500 responses collected
+- **Goal**: 50 surveys created, 500 responses collected, 25 AI insights generated
 
 ### Public Launch (Weeks 5-8)
 - **Target**: 1,000 users
 - **Focus**: Growth and viral mechanics
 - **Channels**: Product Hunt, Hacker News, social media
-- **Goal**: Achieve viral coefficient >1.0
+- **Goal**: Achieve viral coefficient >1.0, 5% AI feature adoption
 
 ### Growth Phase (Months 3-6)
 - **Target**: 10,000 users, $10k MRR
 - **Focus**: Monetization and retention
 - **Channels**: Content marketing, partnerships, paid ads
-- **Goal**: Sustainable growth and positive unit economics
+- **Goal**: Sustainable growth, positive unit economics, AI cost efficiency
 
 ---
 
-*Last Updated: December 27, 2024*  
-*Version: 1.2* - Analytics Dashboard Complete, SSR Authentication Fixed, Ready for AI Integration 
+*Last Updated: December 28, 2024*  
+*Version: 1.3* - AI Insights Complete, Monetization Strategy Defined, Cost Optimization Planned 

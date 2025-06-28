@@ -68,7 +68,7 @@ CREATE TABLE surveys (
   template_type TEXT NOT NULL,
   questions JSONB NOT NULL,
   settings JSONB DEFAULT '{}',
-  status TEXT DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'closed')),
+  status TEXT DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'completed')),
   is_active BOOLEAN DEFAULT FALSE,
   min_responses INTEGER DEFAULT 10,
   response_count INTEGER DEFAULT 0,
