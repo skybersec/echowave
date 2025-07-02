@@ -184,22 +184,148 @@ EchoWave is positioned to become the leading anonymous feedback platform by comb
   - Usage analytics per team member
   - Centralized billing and subscription management
 
-#### 5.2 🆕 **NEW: Advanced Survey Logic**
-- [ ] **Conditional Branching**:
-  - IF/THEN logic for question flow
-  - Skip patterns based on previous answers
-  - Visual logic builder interface
-  - *Demand*: 40% of paid SurveyMonkey users require this feature
+#### 5.2 🆕 **NEW: Advanced Survey Logic** 🚧 **IN PROGRESS**
+*Goal: Deliver no-code Logic Builder + pro-code JSON Script layer to out-class SurveyMonkey, Typeform, Qualtrics*
+
+**📌 Competitive Advantage Target:**
+- **vs SurveyMonkey**: Unlimited multi-branch depth, reusable logic parts, JSON code view
+- **vs Typeform**: Calculated variables, scoring, API import/export 
+- **vs Qualtrics**: User-friendly interface, bidirectional GUI↔JSON sync
+
+**🎯 User Personas & Goals:**
+- **Creator-Basic**: Simple "If answer = No → Skip to End" patterns
+- **Creator-Power**: Branching quizzes with scoring & variable calculations
+- **Developer**: JSON/API workflow for programmatic survey generation
+
+**📊 Data Model & Storage:**
+- [x] **Enhanced Survey Schema**: `logic_rules JSONB DEFAULT '{}'` in surveys table ✅
+- [x] **JSON Script Specification v1**: Standardized format for logic rules ✅
+```jsonc
+{
+  "version": 1,
+  "variables": { "score": { "type": "number", "initial": 0 } },
+  "rules": [
+    {
+      "when": { "q": "q1", "operator": "equals", "value": "Yes" },
+      "then": [ { "action": "jump", "to": "q3" } ]
+    },
+    {
+      "when": { "q": "q2", "operator": "greater_than", "value": 3 },
+      "then": [
+        { "action": "set", "var": "score", "value": { "$add": [ "$score", 10 ] } },
+        { "action": "show", "id": "bonus_question" }
+      ]
+    }
+  ]
+}
+```
+
+**🏗️ Frontend Architecture & Components:**
+- [ ] **LogicBuilderCanvas**: Flowchart canvas using react-flow with zoom/pan
+- [ ] **LogicNode**: Draggable question, decision, and endpoint nodes
+- [ ] **ConnectionLine**: Visual edges with condition summaries
+- [ ] **PartsSidebar**: Library of reusable logic snippets drag-and-drop
+- [ ] **JSONEditorPanel**: Monaco editor with bidirectional sync
+- [ ] **ValidationBanner**: Real-time error detection and warnings
+- [ ] **PreviewSimulator**: Test logic with dummy answer simulation
+
+**📚 Technology Stack Additions:**
+- **react-flow**: Production-ready flowchart with DnD (MIT, <20kB)
+- **@monaco-editor/react**: VS Code editor in browser (MIT, <15kB)
+- **Zustand**: Global state for logic builder (existing)
+- **@hello-pangea/dnd**: Consistency with existing DnD (existing)
+
+**⚙️ Logic Execution Engine:**
+- [ ] **Pure TypeScript Engine**: Runs client & server, shared across Web/Mobile
+- [ ] **Runtime Evaluation**: `evaluateRules(answers, variables)` → `nextQuestionId`, `hiddenQuestions[]`, `variables`
+- [ ] **Performance**: O(rules) per answer, typically <50ms for 100+ rules
+- [ ] **Offline Support**: Bundled engine works in PWA mode
+
+**🔒 Security & Validation:**
+- [ ] **JSON Schema Validation**: Prevent injection, validate rule structure
+- [ ] **Infinite Loop Protection**: Max depth 100, cycle detection
+- [ ] **Row Level Security**: Update only if survey.user_id = auth.uid()
+- [ ] **Input Sanitization**: All user inputs escaped and validated
+
+**🌐 API & Integration Layer:**
+- [ ] **REST Endpoints**: 
+  - `POST /api/surveys/:id/logic` - Update logic rules
+  - `GET /api/surveys/:id/logic` - Retrieve logic configuration
+- [ ] **CLI/cURL Support**: JSON import/export for developer workflows
+- [ ] **Webhook Integration**: Logic events in outbound webhooks
+- [ ] **Version Control**: Logic rule versioning and rollback
+
+**📈 KPI Targets & Success Metrics:**
+- **Logic Adoption**: ≥25% of new surveys use ≥1 rule within 30 days
+- **Upgrade Conversion**: +15% Free→Pro attribution to logic features
+- **User Experience**: <3% confusion rate (measured via support tickets)
+- **Performance**: <100ms logic evaluation for 95th percentile
+- **API Usage**: 10% of Enterprise customers use JSON/API workflow
+
+**🚀 Implementation Milestones:**
+
+**Week 1: Foundation & Spec (🚧 IN PROGRESS)**
+- [x] **Day 1-2**: Detailed technical specification and wireframes ✅
+- [x] **Day 3-4**: JSON Schema definition and TypeScript interfaces ✅  
+- [x] **Day 5-7**: Database migration and API endpoint scaffolding ✅
+  - [x] Comprehensive TypeScript interfaces in `/types/logic.ts` ✅
+  - [x] Database migration with `conditional_logic`, `logic_parts`, and `logic_execution_logs` tables ✅
+  - [x] API endpoints: `/api/surveys/[id]/logic` (GET, POST, PUT, DELETE) ✅
+  - [x] API endpoints: `/api/logic-parts` (GET, POST) for parts library ✅
+  - [x] Built-in logic parts seeded in database (6 starter templates) ✅
+  - [x] Row Level Security policies and validation functions ✅
+
+**Week 2: Core Engine Development**
+- [ ] **Day 1-3**: Logic execution engine with unit tests (100% coverage)
+- [ ] **Day 4-5**: Rule validation and error handling system
+- [ ] **Day 6-7**: Performance optimization and edge case handling
+
+**Week 3: Visual Builder Foundation**
+- [ ] **Day 1-3**: React-flow canvas setup with basic nodes
+- [ ] **Day 4-5**: Node types (Question, Decision, Action, End)
+- [ ] **Day 6-7**: Connection system and visual edge rendering
+
+**Week 4: Drag & Drop Logic Parts**
+- [ ] **Day 1-3**: Parts sidebar with logic snippet library
+- [ ] **Day 4-5**: Drag-and-drop integration with canvas
+- [ ] **Day 6-7**: Custom logic part creation and saving
+
+**Week 5: Bidirectional JSON Sync**
+- [ ] **Day 1-3**: Monaco editor integration with syntax highlighting
+- [ ] **Day 4-5**: Real-time sync between visual builder and JSON
+- [ ] **Day 6-7**: Import/export functionality and validation
+
+**Week 6: UX Polish & Validation**
+- [ ] **Day 1-3**: Real-time validation with error highlighting
+- [ ] **Day 4-5**: Preview simulation with test data
+- [ ] **Day 6-7**: Responsive design and mobile optimization
+
+**Week 7: Testing & Documentation**
+- [ ] **Day 1-3**: Comprehensive testing (unit, integration, E2E)
+- [ ] **Day 4-5**: API documentation and developer guides
+- [ ] **Day 6-7**: User documentation and video tutorials
+
+**Week 8: Beta Release & Feedback**
+- [ ] **Day 1-2**: Feature flag deployment to 10% of Pro users
+- [ ] **Day 3-5**: User feedback collection and analytics review
+- [ ] **Day 6-7**: Bug fixes and UX improvements based on feedback
+
+**🔄 Advanced Features (Future Phases):**
 - [ ] **Question Bank & AI Suggestions**:
-  - Reusable question library
+  - Reusable question library with tagging system
   - AI-powered question generation based on survey goals
-  - Industry-specific question templates
-  - Smart question recommendations during creation
+  - Industry-specific question templates and recommendations
+  - Smart question suggestions during logic building
 - [ ] **Advanced Question Types**:
-  - Matrix/grid questions for complex ratings
-  - File upload capabilities
-  - Date/time picker questions
-  - Ranking and ordering questions
+  - Matrix/grid questions for complex rating scales
+  - File upload capabilities with conditional processing
+  - Date/time picker questions with range validation
+  - Ranking and ordering questions with score calculation
+- [ ] **Advanced Logic Features**:
+  - Multi-page survey flows with progress tracking
+  - Complex scoring algorithms with weighted calculations
+  - Response piping and dynamic question text
+  - A/B testing integration for logic variations
 
 ### Phase 6: Enterprise & White-label (Week 11-12) 🆕 **NEW PHASE**
 **Goal**: Unlock enterprise market and premium pricing
